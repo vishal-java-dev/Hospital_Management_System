@@ -1,0 +1,158 @@
+<%@page import="com.entity.Specialist"%>
+<%@page import="java.util.List"%>
+<%@page import="com.Db.DBConnect"%>
+<%@page import="com.dao.SpecialistDao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page isELIgnored="false"%>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Doctor Profile</title>
+  <%@include file="/components/allCss.jsp"%>
+  <style>
+    body {
+      background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.95)), 
+        url('https://images.unsplash.com/photo-1580281657527-47d7c1b1f483?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .paint-card {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      background-color: #fff;
+      padding: 20px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .btn-success, .btn-primary {
+      font-weight: 600;
+      border-radius: 6px;
+    }
+
+    h3.section-title {
+      text-align: center;
+      font-weight: bold;
+      color: #198754;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <%@ include file="navbar.jsp"%>
+
+  <c:if test="${empty docObj}">
+    <c:redirect url="../doctor_login.jsp"></c:redirect>
+  </c:if>
+
+  <div class="container py-5">
+    <div class="row g-5">
+
+      <!-- Change Password -->
+      <div class="col-md-4">
+        <div class="card paint-card">
+          <h3 class="section-title">Change Password</h3>
+          <div class="card-body">
+
+            <c:if test="${not empty sucMsg}">
+              <div class="alert alert-success">${sucMsg}</div>
+              <c:remove var="sucMsg" scope="session"/>
+            </c:if>
+
+            <c:if test="${not empty errorMsg}">
+              <div class="alert alert-danger">${errorMsg}</div>
+              <c:remove var="errorMsg" scope="session"/>
+            </c:if>
+
+            <form action="../docChangePassword" method="post">
+              <input type="hidden" name="userId" value="${docObj.id}" />
+
+              <div class="mb-3">
+                <label class="form-label">Enter Old Password</label>
+                <input type="password" name="oldPassword" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Enter New Password</label>
+                <input type="password" name="newPassword" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-success w-100">Change Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Profile -->
+      <div class="col-md-7 offset-md-1">
+        <div class="card paint-card">
+          <h3 class="section-title">Edit Profile</h3>
+          <div class="card-body">
+
+            <c:if test="${not empty sucMsgd}">
+              <div class="alert alert-success">${sucMsgd}</div>
+              <c:remove var="sucMsgd" scope="session" />
+            </c:if>
+
+            <c:if test="${not empty errorMsgd}">
+              <div class="alert alert-danger">${errorMsgd}</div>
+              <c:remove var="errorMsgd" scope="session" />
+            </c:if>
+
+            <form action="../doctorUpdateProfile" method="post">
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" required name="fullname" class="form-control" value="${docObj.fullname}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">DOB</label>
+                <input type="date" required name="dob" class="form-control" value="${docObj.dob}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Qualification</label>
+                <input type="text" required name="qualification" class="form-control" value="${docObj.qualification}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Specialist</label>
+                <select name="spec" required class="form-control">
+                  <option>${docObj.specialist}</option>
+                  <%
+                    SpecialistDao dao = new SpecialistDao(DBConnect.getconn());
+                    List<Specialist> list = dao.getAllSpecialist();
+                    for (Specialist s : list) {
+                  %>
+                  <option><%=s.getSpecialistName()%></option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" readonly name="email" class="form-control" value="${docObj.email}">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Mobile Number</label>
+                <input type="text" required name="mobno" class="form-control" value="${docObj.mobno}">
+              </div>
+
+              <input type="hidden" name="id" value="${docObj.id}" />
+              <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

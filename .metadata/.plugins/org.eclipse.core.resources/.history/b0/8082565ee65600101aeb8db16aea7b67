@@ -1,0 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Login - Medi Homes</title>
+  <%@include file="components/allCss.jsp"%>
+
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: url('img/bg-4.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.3);
+      min-height: 100vh;
+      padding-top: 70px;
+      padding-bottom: 40px;
+    }
+
+    .paint-card {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      background-color: #fff;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .btn-success {
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+    }
+
+    .form-control {
+      border-radius: 6px;
+    }
+
+    .login-title {
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
+
+    .message {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <%@ include file="components/navBar.jsp"%>
+
+  <div class="overlay">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <div class="card paint-card">
+            <div class="card-body">
+              <h4 class="text-center text-success login-title mb-4">
+                <i class="fas fa-user-md me-2"></i>Doctor Login
+              </h4>
+
+              <c:if test="${not empty sucMsg}">
+                <div class="alert alert-success text-center message">${sucMsg}</div>
+                <c:remove var="sucMsg" scope="session" />
+              </c:if>
+
+              <c:if test="${not empty errorMsg}">
+                <div class="alert alert-danger text-center message">${errorMsg}</div>
+                <c:remove var="errorMsg" scope="session" />
+              </c:if>
+
+              <form action="doctorLogin" method="post">
+                <div class="mb-3">
+                  <label class="form-label">Email address</label>
+                  <input required name="email" type="email" class="form-control" placeholder="Enter your email">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input required name="password" type="password" class="form-control" placeholder="Enter your password">
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Login</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%@include file="components/footer.jsp"%>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #198754, #157347); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold fs-4 text-white" href="../index.jsp">
+      <i class="fas fa-clinic-medical me-2"></i> Medi Home
+    </a>
+
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav items and profile -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+        <li class="nav-item">
+          <a class="nav-link active fw-semibold text-white" href="index.jsp">
+            <i class="fas fa-home me-1"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active fw-semibold text-white" href="patient.jsp">
+            <i class="fas fa-user-injured me-1"></i> Patients
+          </a>
+        </li>
+      </ul>
+
+      <!-- Profile dropdown -->
+      <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle d-flex align-items-center px-3 py-2 rounded-pill"
+          type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-user-doctor me-2"></i>
+          <span class="fw-semibold">${docObj.fullname}</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a class="dropdown-item" href="edit_profile.jsp">
+              <i class="fas fa-user-edit me-2"></i> Edit Profile
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item text-danger" href="../doctorLogout">
+              <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

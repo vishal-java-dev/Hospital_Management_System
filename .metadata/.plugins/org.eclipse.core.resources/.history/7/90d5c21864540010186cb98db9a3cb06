@@ -1,0 +1,56 @@
+package com.dao;
+
+import com.entity.MedicalRecord;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MedicalRecordDAO {
+    private Connection conn;
+
+    public MedicalRecordDAO(Connection conn) {
+        this.conn = conn;
+    }
+
+    public boolean saveMedicalRecord(MedicalRecord record) {
+        try {
+            String sql = "INSERT INTO medical_records (user_id, appointment_id, file_name, file_path) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, record.getUserId());
+            ps.setInt(2, record.getAppointmentId());
+            ps.setString(3, record.getFileName());
+            ps.setString(4, record.getFilePath());
+
+            return ps.executeUpdate() == 1;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<MedicalRecord> getRecordsByUser(int userId) {
+        List<MedicalRecord> list = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM medical_records WHERE user_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                MedicalRecord record = new MedicalRecord();
+                record.setId(rs.getInt("id"));
+                record.setUserId(rs.getInt("user_id"));
+                record.setAppointmentId(rs.getInt("appointment_id"));
+                record.setFileName(rs.getString("file_name"));
+                record.setFilePath(rs.getString("file_path"));
+                record.setUploadDate(rs.getString("upload_date"));
+
+                list.add(record);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+}

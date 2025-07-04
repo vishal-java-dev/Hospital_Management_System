@@ -1,0 +1,23 @@
+package com.entity;
+
+public class MedicalRecord {
+    private int id;
+    private int userId;
+    private int appointmentId;
+    private String fileName;
+    private String filePath;
+    private String uploadDate;
+
+    // Constructors
+    public MedicalRecord() {}
+
+    public MedicalRecord(int userId, int appointmentId, String fileName, String filePath) {
+        this.userId = userId;
+        this.appointmentId = appointmentId;
+        this.fileName = fileName;
+        this.filePath = filePath;
+    }
+
+    // Getters and setters
+    // ... (standard)
+}

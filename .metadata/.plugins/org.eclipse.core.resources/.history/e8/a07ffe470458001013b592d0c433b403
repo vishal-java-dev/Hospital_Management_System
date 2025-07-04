@@ -1,0 +1,60 @@
+package com.admin.servlet;
+
+import java.io.IOException;
+import java.util.List;
+
+import com.dao.NotificationDAO;
+import com.entity.Notification;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import com.Db.DBConnect;
+
+
+
+@WebServlet("/notifications")
+public class NotificationServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+
+        // Get role and ID from session
+        Object adminObj = session.getAttribute("adminObj");
+        Object docObj = session.getAttribute("docObj");
+        Object patientObj = session.getAttribute("patientObj");
+
+        int userId = 0;
+        String role = "";
+
+        if (adminObj != null) {
+            userId = 1; // You can assign a fixed ID or admin ID
+            role = "admin";
+        } else if (docObj != null && docObj instanceof com.entity.Doctor) {
+            com.entity.Doctor doc = (com.entity.Doctor) docObj;
+            userId = doc.getId();
+            role = "doctor";
+        } else if (patientObj != null && patientObj instanceof com.entity.Patient) {
+            com.entity.Patient p = (com.entity.Patient) patientObj;
+            userId = p.getId();
+            role = "patient";
+        } else {
+            res.sendRedirect("login.jsp");
+            return;
+        }
+
+        NotificationDAO dao = new NotificationDAO(DBConnect.getconn());
+        List<Notification> list = dao.getNotificationsForUser(userId, role);
+
+        req.setAttribute("notifications", list);
+        req.getRequestDispatcher("notifications.jsp").forward(req, res);
+    }
+}

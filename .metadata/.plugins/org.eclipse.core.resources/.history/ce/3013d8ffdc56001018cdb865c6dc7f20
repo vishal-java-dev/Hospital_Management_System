@@ -1,0 +1,58 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*, com.dao.MedicalRecordDAO, com.entity.MedicalRecord, com.entity.User, com.Db.DBConnect" %>
+<%
+    User user = (User) session.getAttribute("userObj");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    int userId = user.getId(); // Get logged-in user's ID
+
+    MedicalRecordDAO dao = new MedicalRecordDAO(DBConnect.getconn());
+    List<MedicalRecord> records = dao.getAllRecordsByUser(userId);
+%>
+<html>
+<head>
+    <title>My Medical Records</title>
+    <%@include file="components/allCss.jsp"%>
+</head>
+<body>
+<%@ include file="components/navBar.jsp"%>
+<div class="container mt-4">
+    <h3 class="mb-4">My Medical Records</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>File Name</th>
+                <th>Uploaded Date</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                for (MedicalRecord rec : records) {
+            %>
+            <tr>
+                <td><%= rec.getAppointmentId() %></td>
+                <td><%= rec.getFileName() %></td>
+                <td><%= rec.getUploadDate() %></td>
+                <td>
+                    <a href="<%= rec.getFilePath() %>" target="_blank" class="btn btn-primary btn-sm">View PDF</a>
+                </td>
+            </tr>
+            <%
+                }
+                if (records.isEmpty()) {
+            %>
+            <tr>
+                <td colspan="4" class="text-center">No medical records found.</td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

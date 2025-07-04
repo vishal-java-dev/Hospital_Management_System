@@ -1,0 +1,20 @@
+<!-- ✅ Bootstrap CSS -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+  crossorigin="anonymous">
+
+<!-- ✅ Font Awesome 6.4.2 (stable version) -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-papNM5Wlv4M16fsRgGXY7IqzDhVoNJz3RkMA2mjZ/fLUhSqtVDMUB3eWDXF0Q8Z2Nq9H+0c8Lk7v7C+3WH1y2w=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer" />
+
+<!-- ✅ Bootstrap JS Bundle -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"></script>
