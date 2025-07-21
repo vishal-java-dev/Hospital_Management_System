@@ -42,7 +42,7 @@ This system facilitates efficient hospital operations by allowing:
 ## 📁 Project Structure
 Hospital_Management_System/
 ├── src/
-│ ├── controller/
+│ ├── db/
 │ ├── dao/
 │ ├── entity/
 │ ├── servlet/
@@ -135,4 +135,4 @@ Hospital_Management_System/
 
 ## 📃 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source and free to use for learning and educational purposes.
